@@ -2,7 +2,7 @@
     "name": "9laksy/paystationnz",
     "description": "Paystation by trademe composer package",
     "require": {
-        "php": ">=7.2"
+        "php": "^7.3"
     },
     "license": "MIT",
     "minimum-stability": "dev",
