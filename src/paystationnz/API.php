@@ -7,7 +7,7 @@ class API
     private $lookupURL = 'https://payments.paystation.co.nz/lookup/';
     private $apiURL = 'https://www.paystation.co.nz/direct/paystation.dll';
 
-    private $rtnURL = 'https://www.yourdomain.com/returnpath';
+    private $rtnURL = '';
 
     /** @var TransactionDBInterface $db */
     private $db;
@@ -16,13 +16,14 @@ class API
     private $gatewayId;
     private $testMode;
 
-    public function __construct(TransactionDBInterface $db, $paystationId = '', $hmacKey = '', $gatewayId = '', $testMode = false)
+    public function __construct(TransactionDBInterface $db, $paystationId = '', $hmacKey = '', $gatewayId = '', $testMode = false, $rtnURL = '')
     {
         $this->db = $db;
         $this->paystationId = $paystationId;
         $this->hmacKey = $hmacKey;
         $this->gatewayId = $gatewayId;
         $this->testMode = $testMode;
+        $this->rtnURL = $rtnURL;
     }
 
     public function setLookupUrl($url)
@@ -88,8 +89,11 @@ class API
             'pstn_ms' => $txn->merchantSession,
             'pstn_am' => $txn->amount,
             'pstn_rf' => 'JSON',
-            'pstn_dp' => $this->rtnURL,
         ];
+        if($this->rtnURL != null && $this->rtnURL != '') {
+            $params['pstn_dp'] = $this->rtnURL;
+        }
+
         $params['pstn_2p'] = 't';
         $params['pstn_rc'] = 't';
         $params['pstn_rt'] = $transactionid;
@@ -125,9 +129,11 @@ class API
             'pstn_gi' => $txn->gatewayId,
             'pstn_ms' => $txn->merchantSession,
             'pstn_am' => $txn->amount,
-            'pstn_rf' => 'JSON',
-            'pstn_dp' => $this->rtnURL,
+            'pstn_rf' => 'JSON'
         ];
+        if($this->rtnURL != null && $this->rtnURL != '') {
+            $params['pstn_dp'] = $this->rtnURL;
+        }
 
         if ($storecard) {
             $params['pstn_fp'] = 't';
