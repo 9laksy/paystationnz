@@ -1,0 +1,14 @@
+{
+    "name": "9laksy/paystationnz",
+    "description": "Paystation by trademe composer package",
+    "require": {
+        "php": "7.4"
+    },
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Laks\\Paystation" : "src/paystationnz/"
+        }
+    }
+}
