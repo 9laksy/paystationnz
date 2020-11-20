@@ -2,7 +2,7 @@
 
 namespace Laks\Paystation;
 
-class API
+class Paystation
 {
     private $lookupURL = 'https://payments.paystation.co.nz/lookup/';
     private $apiURL = 'https://www.paystation.co.nz/direct/paystation.dll';
